@@ -1,0 +1,304 @@
+Here's the full HTML code — copy everything below into a file named `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- EDIT: browser tab title -->
+<title>S Pradeep — Assistant Professor</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --pine:      #1d3b34;
+    --pine-soft: #2a4d44;
+    --parchment: #f6f3ec;
+    --card:      #fffdf8;
+    --brass:     #a9893f;
+    --ink:       #23211c;
+    --muted:     #6a665c;
+    --hairline:  #e3ddd0;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--pine);
+    color: #eef1ec;
+    padding: 56px 38px;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .portrait {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 28px;
+    border: 1px solid rgba(169, 137, 63, 0.55);
+    padding: 6px;
+    background: var(--pine-soft);
+  }
+  .name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.15rem;
+    font-weight: 600;
+    line-height: 1.12;
+    text-align: center;
+    margin: 0 0 6px;
+    letter-spacing: 0.3px;
+  }
+  .name-rule { width: 52px; height: 1px; background: var(--brass); margin: 14px auto 16px; }
+  .role {
+    text-align: center;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 4px;
+  }
+  .affil { text-align: center; font-size: 0.9rem; color: #c8cfc7; margin: 0 0 36px; }
+  .contact-block { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 24px; }
+  .contact-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 12px;
+  }
+  .contact-list { list-style: none; margin: 0; padding: 0; }
+  .contact-list li { font-size: 0.9rem; margin-bottom: 11px; color: #d6dcd4; word-break: break-word; }
+  .contact-list a { color: #eef1ec; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .contact-list a:hover { border-color: var(--brass); }
+
+  /* MAIN */
+  .main { padding: 64px 60px 72px; }
+  section { margin-bottom: 52px; }
+  section:last-child { margin-bottom: 0; }
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 6px;
+  }
+  h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.85rem;
+    font-weight: 600;
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  p { margin: 0 0 16px; color: #34302a; }
+  .lead { font-size: 1.05rem; }
+
+  .entry { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
+  .entry:last-child { border-bottom: none; }
+  .entry .year { color: var(--muted); font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+  .entry .what { margin: 0; }
+  .entry .what strong { font-weight: 600; }
+  .entry .where { color: var(--muted); font-size: 0.92rem; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
+  .tags li {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    padding: 7px 15px;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .pubs { list-style: none; margin: 0; padding: 0; counter-reset: pub; }
+  .pubs li {
+    position: relative;
+    padding: 0 0 18px 40px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 0.96rem;
+  }
+  .pubs li:last-child { border-bottom: none; margin-bottom: 0; }
+  .pubs li::before {
+    counter-increment: pub;
+    content: "[" counter(pub) "]";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+  }
+  .pubs em { color: var(--muted); }
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    margin-top: 60px;
+    padding-top: 22px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  a:focus-visible, .contact-list a:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; padding: 44px 28px; }
+    .main { padding: 44px 28px 56px; }
+    .entry { grid-template-columns: 1fr; gap: 4px; }
+    .entry .year { order: -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="shell">
+
+    <!-- SIDEBAR: photo, name, role, contact -->
+    <aside class="sidebar">
+      <!-- Replace photo.jpg with your image (placed beside this file) or a full URL -->
+      <img class="portrait" src="photo.jpg" alt="Portrait of Dr. Your Name"
+           onerror="this.src='https://placehold.co/336x336/2a4d44/a9893f?text=Your+Photo'" />
+
+      <h1 class="name">S.Pradeep</h1>
+      <div class="name-rule"></div>
+      <p class="role">Assistant Professor</p>
+      <p class="affil">Department of CSE (AI&ML)<br>ANITS</p>
+
+      <div class="contact-block">
+        <p class="contact-label">Contact</p>
+        <ul class="contact-list">
+          <li>Office: Room 206, I BLOCK</li>
+          <li><a href="mailto:sevapradeep.csm@anits.edu.in">sevapradeep.csm@anits.edu.in</a></li>
+          <li><a href="tel:+919494218701">+91 9494218701</a></li>
+          <li><a href="#">Google Scholar</a></li>
+          <li><a href="#">ORCID / LinkedIn</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <section id="about">
+        <p class="eyebrow">About</p>
+        <h2>Biography</h2>
+        <p class="lead">
+          I am an Assistant Professor in the Department of CSE (AI&ML) at ANITS, where my work focuses on Artificial Intelligence & Machine Learning.
+        </p>
+        <p>
+          Replace this paragraph with a short biography. Mention your academic
+          background, the questions that drive your research, and any roles you
+          hold. Keep it warm but concise — three to five sentences reads best.
+        </p>
+      </section>
+
+      <section id="interests">
+        <p class="eyebrow">Focus</p>
+        <h2>Research Interests</h2>
+        <ul class="tags">
+          <li>Research Area One</li>
+          <li>Research Area Two</li>
+          <li>Research Area Three</li>
+          <li>Methodology / Topic</li>
+          <li>Topic of Interest</li>
+        </ul>
+      </section>
+
+      <section id="education">
+        <p class="eyebrow">Background</p>
+        <h2>Education</h2>
+        <div class="entry">
+          <span class="year">2018 – 2023</span>
+          <p class="what"><strong>Ph.D. in Your Field</strong><br>
+            <span class="where">University Name, City</span></p>
+        </div>
+        <div class="entry">
+          <span class="year">2016 – 2018</span>
+          <p class="what"><strong>M.Sc. / M.Tech. in Your Field</strong><br>
+            <span class="where">University Name, City</span></p>
+        </div>
+        <div class="entry">
+          <span class="year">2012 – 2016</span>
+          <p class="what"><strong>B.Sc. / B.Tech. in Your Field</strong><br>
+            <span class="where">University Name, City</span></p>
+        </div>
+      </section>
+
+      <section id="publications">
+        <p class="eyebrow">Selected Work</p>
+        <h2>Publications</h2>
+        <ol class="pubs">
+          <li>Your Name, Co-author. <strong>Title of your paper goes here.</strong>
+            <em>Journal or Conference Name</em>, Year.</li>
+          <li>Co-author, Your Name. <strong>Another representative publication.</strong>
+            <em>Journal or Conference Name</em>, Year.</li>
+          <li>Your Name. <strong>A third selected work.</strong>
+            <em>Journal or Conference Name</em>, Year.</li>
+        </ol>
+      </section>
+
+      <section id="teaching">
+        <p class="eyebrow">In the Classroom</p>
+        <h2>Teaching</h2>
+        <div class="entry">
+          <span class="year">Course code</span>
+          <p class="what"><strong>Course Title</strong><br>
+            <span class="where">Level — Semester / Year</span></p>
+        </div>
+        <div class="entry">
+          <span class="year">Course code</span>
+          <p class="what"><strong>Another Course Title</strong><br>
+            <span class="where">Level — Semester / Year</span></p>
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Dr. Your Name · Department of Your Field, Your University
+      </footer>
+
+    </main>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+```
+
+Save it as `index.html`, place your photo (e.g. `photo.jpg`) in the same folder, and replace the placeholder text. Want me to add a nav bar, a CV download button, or switch the green to navy or burgundy?
